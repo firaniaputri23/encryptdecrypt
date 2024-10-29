@@ -1,6 +1,5 @@
 @extends('master') 
 @include('navbar')
-
 @section('content')
     <div class="hero-section d-flex align-items-center justify-content-center">
         <div class="container text-center">
@@ -10,7 +9,6 @@
             <p class="lead mb-5 animate__animated animate__fadeInUp" style="max-width: 1200px; margin: 0 auto; color: #e0e0e0; font-size: 1.5rem; font-style: bold;">
                 In a world where data security is paramount, safeguarding your sensitive documents has never been more crucial. Introducing our AES Encryption Tool—your ultimate solution for protecting your PDFs, JPGs, and MP4 files with state-of-the-art encryption technology!
             </p>
-
             <div class="features mb-5 animate__animated animate__fadeInUp">
                 <h7 class="display-5 fw-bold text-light mb-4">Why Choose Our AES Encryption Tool?</h7>
                 <div class="row justify-content-center mt-4">
@@ -52,7 +50,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="join-users animate__animated animate__fadeInUp">
                 <h3 class="text-light"><strong>Get Free Udemy Course to Mastering Cryptography!</strong></h3>
                 <h5 class="text-light spacing">Powered by ITS Nabu - Networking Technologies and Intelligent Cyber Security (NETICS) Laboratory of the ITS Informatics Department</h5>
@@ -61,9 +58,7 @@
         <span class="rainbow-light"></span>
     </a>
 </div>
-
 @endsection
-
 <style>
     .hero-section {
         height: 100vh;
@@ -75,7 +70,6 @@
         background-size: 300% 300%;
         animation: gradientBackground 10s ease infinite;
     }
-
     @keyframes gradientBackground {
         0% {
             background-position: 0% 50%;
@@ -87,7 +81,6 @@
             background-position: 0% 50%;
         }
     }
-
     .rainbow-light {
         content: "";
         position: absolute;
@@ -101,7 +94,6 @@
         border-radius: 5px;
         transform: translateX(-50%); /* Center the effect */
     }
-
     @keyframes glow {
         0% {
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Starting glow */
@@ -113,7 +105,6 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Return to starting glow */
         }
     }
-
     .learn-more {
         font-weight: bold; /* Ensure the title is bold */
         margin-bottom: 20px; /* Space below the button */
@@ -123,7 +114,6 @@
         transition: background-color 0.3s, transform 0.3s; /* Add smooth transitions */
         display: inline-block; /* Ensure the button respects padding */
     }
-
     .btn-dark {
         font-weight: bold; /* Ensure the title is bold */
         background-color: #1e1e1e; /* Dark background for the button */
@@ -133,18 +123,15 @@
         position: relative;
         z-index: 1; /* Make sure button is above the glow */
     }
-
     .btn-dark:hover {
         font-weight: bold; /* Ensure the title is bold */
         background-color: #333; /* Slightly lighter on hover */
         box-shadow: 0 0 15px rgba(0, 188, 212, 0.5), 0 0 30px rgba(0, 188, 212, 0.3); /* Cyan glow on hover */
         transform: scale(1.05); /* Slightly enlarge button on hover */
     }
-
     .glow-on-hover {
         transition: box-shadow 0.3s ease;
     }
-
     .glow-on-hover:hover {
         font-weight: bold; /* Ensure the title is bold */
         box-shadow: 0 0 20px rgba(0, 188, 212, 0.5), 0 0 30px rgba(0, 188, 212, 0.3); /* Glow effect on hover */
