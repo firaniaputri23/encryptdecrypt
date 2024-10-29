@@ -1,14 +1,14 @@
-@extends('master')
-@include('navbar')
+@extends('master') {{-- Extends the master layout --}}
+@include('navbar') {{-- Includes the navbar section --}}
 @php
-$homeController = app('App\Http\Controllers\HomeController');
+$homeController = app('App\Http\Controllers\HomeController'); {{-- Instantiates HomeController --}}
 @endphp
+
 @section('content')
 <div class="container">
     <div class="text-center mb-5" style="margin-top: 100px">
-        <!-- Center the content -->
         <div class="col">
-            <h1 class="text-center display-5 fw-bold" style="margin-top: 100px">{{$user->username}}'s id_card</h1>
+            <h1 class="text-center display-5 fw-bold" style="margin-top: 100px">{{$user->username}}'s ID Card</h1>
             <br />
         </div>
     </div>
@@ -20,11 +20,11 @@ $homeController = app('App\Http\Controllers\HomeController');
                     <div class="form-group mb-3 p-2">
                         <label class="fw-bold mb-3" style="font-size: 20px;">Decrypt key from your email</label>
                         <textarea id="encsymkey" rows="5" class="form-control" name="encsymkey"
-                            placeholder="Enter the key from your email" value=""></textarea>
+                            placeholder="Enter the key from your email"></textarea>
                     </div>
 
                     <div class="d-flex justify-content-end mb-5">
-                        <button id="submitButton1" class="btn btn-dark mx-2" type="submit">Submit</button>
+                        <button id="submitButton1" class="btn btn-dark mx-2" type="button">Submit</button>
                     </div>
 
                     <div class="mb-3 p-2">
@@ -34,6 +34,7 @@ $homeController = app('App\Http\Controllers\HomeController');
                 </div>
             </div>
         </div>
+
         <div class="card mb-3 col-lg-5 mx-3">
             <div class="card-body">
                 <div class="d-flex flex-column">
@@ -41,18 +42,17 @@ $homeController = app('App\Http\Controllers\HomeController');
                         <label class="fw-bold mb-3" style="font-size: 20px;">Symmetric Key</label>
                         @if($inbox !== null)
                         <input type="hidden" class="form-control" id="realsymkey" value="{{$inbox->sym_key}}">
-                        <input class="form-control" id="realsymkey" value="{{$inbox->sym_key}}">
                         @endif
                         <textarea id="symkey" rows="5" class="form-control" name="symkey"
-                            placeholder="Enter the symmetric key" value=""></textarea>
+                            placeholder="Enter the symmetric key"></textarea>
                     </div>
 
                     <div class="d-flex justify-content-end mb-5">
-                        <button id="submitButton2" class="btn btn-dark mx-2" type="submit">Submit</button>
+                        <button id="submitButton2" class="btn btn-dark mx-2" type="button">Submit</button>
                     </div>
-                    {{-- {{ route('mail.idcard', ['key' => $user->id]) }} --}}
-                    <form action="/home/inbox/idcard/{{(int)$aesuser->user_id}}" method="post"
-                        enctype="multipart/form-data">
+
+                    {{-- Decrypt ID card form --}}
+                    <form action="/home/inbox/idcard/{{(int)$aesuser->user_id}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mb-5 p-2 d-flex justify-content-between align-items-center">
                             <label class="fw-bold mb-3" style="font-size: 20px;">Not requested yet?</label>
@@ -60,14 +60,14 @@ $homeController = app('App\Http\Controllers\HomeController');
                         </div>
                     </form>
 
+                    {{-- ID card download section (hidden until authenticated) --}}
                     <div class="form-group mb-2 p-2 d-block visually-hidden" id="hiddendata">
-                        <label class="fw-bold mb-2" style="font-size: 20px;">Here is {{$user->username}}'s id
-                            card</label>
+                        <label class="fw-bold mb-2" style="font-size: 20px;">Here is {{$user->username}}'s ID Card</label>
                         @php
                         $akey = null;
 
                         if ($inbox !== null) {
-                        $akey = str_replace('/', '', $inbox->sym_key);
+                            $akey = str_replace('/', '', $inbox->sym_key);
                         }
                         @endphp
 
@@ -85,6 +85,7 @@ $homeController = app('App\Http\Controllers\HomeController');
 </div>
 
 <script>
+    // Event listener for first submit button (decrypt key)
     document.getElementById('submitButton1').addEventListener('click', function () {
         var inputValue = document.getElementById('encsymkey').value;
 
@@ -97,7 +98,6 @@ $homeController = app('App\Http\Controllers\HomeController');
                     encsymkey: inputValue
                 },
                 success: function (response) {
-                    console.log(response);
                     document.getElementById('outputTextarea').value = response.decrypted;
                 },
                 error: function (error) {
@@ -107,20 +107,16 @@ $homeController = app('App\Http\Controllers\HomeController');
         }
     });
 
+    // Event listener for second submit button (symmetric key validation)
     document.getElementById('submitButton2').addEventListener('click', function () {
         var inputValue = document.getElementById('symkey').value;
         var realsymkey = document.getElementById('realsymkey').value;
         var hiddenDataDiv = document.getElementById('hiddendata');
 
-        if (inputValue == realsymkey) {
-            if (hiddenDataDiv.classList.contains('visually-hidden')) {
-                hiddenDataDiv.classList.remove('visually-hidden');
-            }
-        }
-        else {
-            if (!hiddenDataDiv.classList.contains('visually-hidden')) {
-                hiddenDataDiv.classList.add('visually-hidden');
-            }
+        if (inputValue === realsymkey) {
+            hiddenDataDiv.classList.remove('visually-hidden');
+        } else {
+            hiddenDataDiv.classList.add('visually-hidden');
         }
     });
 </script>
