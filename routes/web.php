@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('session/welcome');
 // });
-
 Route::get('/', [UserController::class, 'welcome']);
 
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
@@ -30,6 +29,8 @@ Route::post('/home', [HomeController::class, 'store'])->middleware('auth');
 Route::get('/home/edit', [HomeController::class, 'edit'])->middleware('auth');
 Route::put('/home', [HomeController::class, 'update'])->middleware('auth');
 Route::get('/home/users', [HomeController::class, 'seeUsers'])->middleware('auth');
+Route::get('/home/inbox', [HomeController::class, 'inbox'])->middleware('auth');
+Route::post('/home/inbox/{algo}/{id}', [HomeController::class, 'store_inbox'])->middleware('auth');
 
 Route::get('/home/data/fullname/{id}', [DataController::class, 'fullname'])->middleware('auth');
 Route::get('/home/data/id_card/{id}', [DataController::class, 'idcard'])->middleware('auth');

@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id(); // Auto-incrementing ID
-            $table->string('username')->unique(); // Unique username
-            $table->string('email')->unique(); // Unique email address
-            $table->string('password'); // User password
-            $table->longText('public_key'); // User's public key
-            $table->longText('private_key'); // User's private key
-            $table->boolean('doc_is_signed')->default(false); // Document signed status
-            $table->rememberToken(); // Token for "remember me" functionality
-            $table->timestamps(); // Created at and updated at timestamps
+            $table->id();
+            $table->string('username')->unique();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->longText('public_key');
+            $table->longText('private_key');
+            $table->boolean('doc_is_signed');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users'); // Drop the users table if it exists
+        Schema::dropIfExists('users');
     }
 };

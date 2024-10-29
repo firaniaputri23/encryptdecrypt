@@ -17,9 +17,7 @@ return new class extends Migration
             $table->string('id_card');
             $table->string('document');
             $table->string('video');
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->constrained();
             $table->string('fullname_key');
             $table->string('fullname_iv');
             $table->string('id_card_key');

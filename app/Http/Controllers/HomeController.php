@@ -33,6 +33,27 @@ class HomeController extends Controller
         return view('home.users', compact('usernames', 'aess'));
     }
 
+    public function inbox()
+    {
+        $aess = Aes::where('user_id', Auth::user()->id)->get();
+        $inboxes = UserInbox::where('main_user_id', Auth::user()->id)
+            ->where('is_acc', false)->get();
+        return view('home.inbox', compact('aess', 'inboxes'));
+    }
+
+    public function store_inbox(Request $request, $algo, $id)
+    {
+        UserInbox::create([
+            'main_user_id' => $id,
+            'client_user_id' => Auth::user()->id,
+            'type' => $algo,
+            'sym_key' => null,
+            'iv' => null,
+            'encrypted_data' => null,
+        ]);
+        return redirect()->back();
+    }
+
     public function create()
     {
         $aess = Aes::where('user_id', Auth::user()->id)->get();

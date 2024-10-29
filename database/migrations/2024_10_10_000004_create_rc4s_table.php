@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rc4s', function (Blueprint $table) {
+        Schema::create('des', function (Blueprint $table) {
             $table->id();
             $table->string('fullname');
             $table->string('id_card');
             $table->string('document');
             $table->string('video');
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->constrained();
             $table->string('key');
+            $table->string('iv');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rc4s');
+        Schema::dropIfExists('des');
     }
 };
